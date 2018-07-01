@@ -21,6 +21,7 @@
         <activity android:name="com.letzgro.thecoffeethunder.activity.SettingsActivity" />
         <activity android:name="com.letzgro.thecoffeethunder.activity.MenuActivity" />
         <activity android:name="com.letzgro.thecoffeethunder.activity.NewItemActivity" />
+        <activity android:name="com.letzgro.thecoffeethunder.activity.MenuItems" />
     </application>
 
 </manifest>

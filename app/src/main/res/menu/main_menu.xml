@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_settings"
-        android:icon="@mipmap/cup"
+        android:icon="@drawable/ic_action_name"
         android:orderInCategory="10"
         android:title="Main Menu"
         app:showAsAction="ifRoom|withText" />

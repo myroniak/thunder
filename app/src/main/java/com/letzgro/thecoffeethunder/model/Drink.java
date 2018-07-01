@@ -6,12 +6,21 @@ public class Drink {
 
     private String id;
     private String name;
+    private String size;
+    private int price;
     private ArrayList<Size> sizeList;
 
     public Drink(String id, String name, ArrayList<Size> sizeList) {
         this.id = id;
         this.name = name;
         this.sizeList = sizeList;
+    }
+
+    public Drink(String id, String name,String size, int price) {
+        this.id = id;
+        this.name = name;
+        this.size = size;
+        this.price = price;
     }
 
     public String getId() {
@@ -38,4 +47,19 @@ public class Drink {
         this.sizeList = sizeList;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

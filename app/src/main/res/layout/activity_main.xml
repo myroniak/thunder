@@ -15,6 +15,7 @@
             android:layout_toStartOf="@id/count"
             android:gravity="center"
             android:text="0₴"
+            android:textColor="@color/colorText"
             android:textSize="60sp" />
 
         <TextView
@@ -22,10 +23,10 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentEnd="true"
-            android:background="#7c7c7c"
+            android:background="@color/colorTextNoItems"
             android:gravity="center"
-            android:textColor="#000000"
             android:text="0"
+            android:textColor="@color/colorText"
             android:textSize="60sp" />
 
     </RelativeLayout>

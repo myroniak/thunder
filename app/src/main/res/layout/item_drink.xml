@@ -20,7 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/remove"
         android:text="Edit"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/name"

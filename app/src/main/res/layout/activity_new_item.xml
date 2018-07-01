@@ -36,7 +36,8 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/tv_single"
             android:ems="10"
-            android:hint="price" />
+            android:hint="price"
+            android:inputType="numberSigned|numberDecimal"/>
 
         <CheckBox
             android:id="@+id/cb_single"

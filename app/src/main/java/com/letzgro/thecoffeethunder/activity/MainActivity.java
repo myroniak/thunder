@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.chootdev.recycleclick.RecycleClick;
 import com.letzgro.thecoffeethunder.R;
 import com.letzgro.thecoffeethunder.adapter.RecyclerAdapter;
-import com.letzgro.thecoffeethunder.dialog.DialogBuilder;
 import com.letzgro.thecoffeethunder.dialog.DialogBuilderDrink;
 import com.letzgro.thecoffeethunder.model.Drink;
 import com.letzgro.thecoffeethunder.util.PreferencesManager;
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerAdapter mRecyclerAdapter;
     private TextView summary;
     private int k;
-    private ArrayList<Drink> drinks;
+    public static ArrayList<Drink> drinks = new ArrayList();
     private TextView menuItems;
 
     @Override
@@ -55,45 +54,65 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view, AlertDialog dialog) {
                                 k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(0).getPrice());
-                                summary.setText(k + " ₴");
+                                drinks.add(new Drink(mRecyclerAdapter.getList().get(position).getId(), mRecyclerAdapter.getList().get(position).getName(), "Single", Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(0).getPrice())));
+                                menuItems.setText("" + drinks.size());
+                                initialParameters();
                                 dialog.dismiss();
+
                             }
-                        }).setSmallButton(new DialogBuilderDrink.OnClickListener() {
-                    @Override
-                    public void onClick(View view, AlertDialog dialog) {
-                        k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(1).getPrice());
-                        summary.setText(k + " ₴");
-                        dialog.dismiss();
-                    }
-                }).setMediumButton(new DialogBuilderDrink.OnClickListener() {
-                    @Override
-                    public void onClick(View view, AlertDialog dialog) {
-                        k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(2).getPrice());
-                        summary.setText(k + " ₴");
-                        dialog.dismiss();
-                    }
-                }).setLargeButton(new DialogBuilderDrink.OnClickListener() {
-                    @Override
-                    public void onClick(View view, AlertDialog dialog) {
-                        k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(3).getPrice());
-                        summary.setText(k + " ₴");
-                        dialog.dismiss();
-                    }
-                }).create().show();
+                        })
+                        .setSmallButton(new DialogBuilderDrink.OnClickListener() {
+                            @Override
+                            public void onClick(View view, AlertDialog dialog) {
+                                k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(1).getPrice());
+                                drinks.add(new Drink(mRecyclerAdapter.getList().get(position).getId(), mRecyclerAdapter.getList().get(position).getName(), "S", Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(1).getPrice())));
+                                menuItems.setText("" + drinks.size());
+                                initialParameters();
+                                dialog.dismiss();
+
+                            }
+                        })
+                        .setMediumButton(new DialogBuilderDrink.OnClickListener() {
+                            @Override
+                            public void onClick(View view, AlertDialog dialog) {
+                                k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(2).getPrice());
+                                drinks.add(new Drink(mRecyclerAdapter.getList().get(position).getId(), mRecyclerAdapter.getList().get(position).getName(), "M", Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(2).getPrice())));
+                                menuItems.setText("" + drinks.size());
+                                initialParameters();
+                                dialog.dismiss();
+
+                            }
+                        })
+                        .setLargeButton(new DialogBuilderDrink.OnClickListener() {
+                            @Override
+                            public void onClick(View view, AlertDialog dialog) {
+                                k = k + Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(3).getPrice());
+                                menuItems.setText("" + drinks.size());
+                                drinks.add(new Drink(mRecyclerAdapter.getList().get(position).getId(), mRecyclerAdapter.getList().get(position).getName(), "L", Integer.valueOf(mRecyclerAdapter.getList().get(position).getSizeList().get(3).getPrice())));
+                                initialParameters();
+                                dialog.dismiss();
+
+                            }
+                        }).create().show();
 
 
-                drinks.add(mRecyclerAdapter.getList().get(position));
             }
         });
-
-        summary.setOnLongClickListener(new View.OnLongClickListener() {
+        menuItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MenuItems.class));
+            }
+        });
+       /* summary.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 k = 0;
                 summary.setText("0 ₴");
                 return false;
             }
-        });
+        });*/
+
        /* FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
@@ -145,6 +164,33 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (mRecyclerAdapter != null && PreferencesManager.getInstance().getDrinkList() != null) {
             mRecyclerAdapter.updateList(PreferencesManager.getInstance().getDrinkList());
+        }
+        initialParameters();
+    }
+
+
+    private void initialParameters() {
+        if (drinks != null) {
+            menuItems.setText("" + drinks.size());
+            k = 0;
+
+            for (Drink drink : drinks) {
+                k += drink.getPrice();
+            }
+
+
+            if (drinks.size() == 0) {
+                menuItems.setEnabled(false);
+                menuItems.setBackgroundColor(getResources().getColor(R.color.colorNoItems));
+                menuItems.setTextColor(getResources().getColor(R.color.colorTextNoItems));
+            } else {
+                menuItems.setEnabled(true);
+                menuItems.setBackgroundColor(getResources().getColor(R.color.colorNoItems));
+                menuItems.setTextColor(getResources().getColor(R.color.colorText));
+            }
+
+            summary.setText(k + " ₴");
+
         }
     }
 }
